@@ -1,0 +1,113 @@
+@startuml Iridium Class Diagram
+
+package DataStructures {
+    class Vec3<T> {
+        -T data[3]
+        +Vec3()
+        +Vec3(T x, T y, T z)
+        +Vec3(T* arr)
+        +T& operator[](int i)
+        +Vec3<T> operator+(Vec3<T> v)
+        +Vec3<T> operator-(Vec3<T> v)
+        +Vec3<T> operator*(Vec3<T> v)
+        +Vec3<T> operator+(T s)
+        +Vec3<T> operator-(T s)
+        +Vec3<T> operator*(T s)
+        +Vec3<T> operator/(T s)
+    }
+
+    class Vec4<T> {
+        -T data[4]
+        +Vec4()
+        +Vec4(T x, T y, T z, T w)
+        +Vec4(T* arr)
+        +T& operator[](int i)
+        +Vec4<T> operator+(Vec4<T> v)
+        +Vec4<T> operator-(Vec4<T> v)
+        +Vec4<T> operator*(Vec4<T> v)
+        +Vec4<T> operator+(T s)
+        +Vec4<T> operator-(T s)
+        +Vec4<T> operator*(T s)
+        +Vec4<T> operator/(T s)
+    }
+
+    class Quaternion {
+        +Quaternion()
+        +Quaternion(float x, float y, float z, float w)
+        +Quaternion(Vec3<float> v, float w)
+        +Quaternion(Vec4<float> v)
+    }
+
+    class Transform {
+        -Vec3<float> position
+        -Quaternion rotation
+        -Vec3<float> scale
+        -Vec3<float> inversePosition
+        -Quaternion inverseRotation
+        -Vec3<float> inverseScale
+        +Transform()
+        +getPosition()
+        +setPosition(Vec3<float> position)
+        +getRotation()
+        +setRotation(Quaternion rotation)
+        +getScale()
+        +setScale(Vec3<float> scale)
+        +getInversePosition()
+        +getInverseRotation()
+        +getInverseScale()
+    }
+
+    class List<T> {
+        -T* data
+        -int size
+        -int capacity
+        -void increaseCapacity()
+        +List()
+        +List(int capacity)
+        +~List()
+        +List(const List<T>& other)
+        +void append(T item)
+        +void add(T item)
+        +void remove(int index)
+        +int getSize()
+        +int getCapacity()
+    }
+
+    struct Message {
+        +MessageEnumerator enumerator;
+        +int id
+    }
+
+    enum MessageEnumerator
+
+    class Node {
+        +Transform transform
+        +Node* parent
+        +List<Node*> children
+        +int id
+        +Node()
+        +Node(Node* parent)
+        +~Node()
+        +void addChild(Node* child)
+        +void removeChild(Node* child)
+        +void draw()
+        +void update()
+        +void sendMessage(MessageEnumerator* enumerator)
+    }
+
+    Quaternion <|-- Vec4 : Vec4<float>
+    Quaternion -- Vec3 : Vec3<float>
+
+    Transform *-- Vec3 : Vec3<float>
+    Transform *-- Quaternion
+
+    Node -- Message
+    Node *-- List : List<Node*>
+    Node *-- Transform
+
+    Message *-- MessageEnumerator
+}
+
+hide empty members
+
+@enduml
